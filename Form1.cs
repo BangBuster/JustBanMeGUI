@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters;
 using System.Text;
 using System.Threading;
@@ -30,6 +31,10 @@ namespace JustBanMeGUI
         public Form1()
         {
             InitializeComponent();
+
+            // Game classes
+            InitializeGames();
+
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             backgroundWorker1.DoWork += backgroundWorker1_DoWork;
             
@@ -39,44 +44,57 @@ namespace JustBanMeGUI
         {
             while (true)
             {
-                // Notepad status handle
+                for (int i = 0; i < games.Count; i++) // Itirate through games
+                {
 #if DEBUG
-                if (Functions.processExist("Notepad"))
-#else
-                if (Functions.processExist("csgo"))
+                    Console.WriteLine("GOIGN ONCE!");
 #endif
-                {
-                    Console.Write("CSGO!");
-                    label_csgo.Text = "Found!";
-                    label_csgo.ForeColor = Color.Green;
-                    radioButton_csgo.Enabled = true;
-                }
-                else
-                {
-                    label_csgo.Text = "not Found";
-                    label_csgo.ForeColor = Color.Red;
-                    radioButton_csgo.Enabled = false;
+                    var game = games[i];
+                    Label fetchedLabel = panel1.Controls.OfType<Label>().FirstOrDefault(l => l.Name == "cLabel_" + games[i].shortName);
+                    RadioButton fetchdRadio = panel1.Controls.OfType<RadioButton>().FirstOrDefault(l => l.Name == "cRadioButton_" + games[i].shortName);
+                    if (Functions.processExist(game.processName))
+                    {
+#if DEBUG
+                        Console.WriteLine(game.gameName + " detected!");
+#endif
+                        if (fetchedLabel != null | fetchdRadio != null)
+                            continue;
+                        RadioButton rBtn = new RadioButton();
+                        rBtn.Name = "cRadioButton_" + game.shortName;
+                        rBtn.Text = game.gameName;
+                        rBtn.Enabled = game.status == 0 ? true : false;
+                        rBtn.Cursor = game.status == 0 ? Cursors.Hand : Cursors.No;
+                        rBtn.Location = new Point(10, 25 - i * 25);
+
+                        Label lbl = new Label();
+                        lbl.Name = "cLabel_" + game.shortName;
+                        lbl.Text = game.status == 0 ? "Ready!" : "Unavailable";
+                        lbl.ForeColor = game.status == 0 ? Color.Green : Color.Red;
+                        lbl.Location = new Point(rBtn.Location.X+100, rBtn.Location.Y+2); // 2 = Pixel alignment
+                        lbl.Cursor = game.status == 0 ? Cursors.Hand : Cursors.No;
+                        panel1.Invoke((MethodInvoker)delegate
+                        {
+                            panel1.Controls.Add(rBtn);
+                            panel1.Controls.Add(lbl);
+                        });
+                    }
+                    else
+                    {
+                        for (int j = 0; j < panel1.Controls.Count; j++)
+                        {
+                            if (fetchedLabel != null | fetchdRadio != null)
+                            {
+                                panel1.Invoke((MethodInvoker)delegate
+                                {
+                                    panel1.Controls.Remove(fetchdRadio);
+                                    panel1.Controls.Remove(fetchedLabel);
+                                });
+                            }
+                        }
+                    }
                 }
 
-                // Discord status handle
-#if DEBUG
-                if (Functions.processExist("Discord"))
-#else
-                if (Functions.processExist("Among Us"))
-#endif
-                {
-                    label_amongUs.Text = "Found!";
-                    label_amongUs.ForeColor = Color.Green;
-                    radioButton_amongUs.Enabled = true;
-                }
-                else
-                {
-                    label_amongUs.Text = "not Found";
-                    label_amongUs.ForeColor = Color.Red;
-                    radioButton_amongUs.Enabled = false;
-                }
-
-                Thread.Sleep(2000);
+                Thread.Sleep(1000);
             }
         }
         
@@ -88,31 +106,6 @@ namespace JustBanMeGUI
         private void button1_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Injected!", "Injected! (injected cheat)", MessageBoxButtons.OK);
-        }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label_csgo_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
