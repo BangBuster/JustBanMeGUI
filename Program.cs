@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Reflection;
+using System.IO;
 
 namespace JustBanMeGUI
 {
@@ -16,7 +18,10 @@ namespace JustBanMeGUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Form1 form1 = new Form1();
+            Authentication authForm = new Authentication();
+            Application.Run(authForm);
+            //Application.Run(form1); <- Run this from Authentication
         }
     }
 }
