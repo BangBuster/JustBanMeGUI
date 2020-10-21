@@ -1,13 +1,7 @@
 ﻿#define DEBUG // Enable debug build
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Runtime.Serialization.Formatters;
-using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -37,7 +31,7 @@ namespace JustBanMeGUI
 
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             backgroundWorker1.DoWork += backgroundWorker1_DoWork;
-            
+
         }
 
         private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
@@ -70,7 +64,7 @@ namespace JustBanMeGUI
                         lbl.Name = "cLabel_" + game.shortName;
                         lbl.Text = game.status == 0 ? "Ready!" : "Unavailable";
                         lbl.ForeColor = game.status == 0 ? Color.Green : Color.Red;
-                        lbl.Location = new Point(rBtn.Location.X+100, rBtn.Location.Y+2); // 2 = Pixel alignment
+                        lbl.Location = new Point(rBtn.Location.X + 100, rBtn.Location.Y + 2); // 2 = Pixel alignment
                         lbl.Cursor = game.status == 0 ? Cursors.Hand : Cursors.No;
                         panel1.Invoke((MethodInvoker)delegate
                         {
@@ -97,7 +91,7 @@ namespace JustBanMeGUI
                 Thread.Sleep(1000);
             }
         }
-        
+
         private void Form1_Load(object sender, EventArgs e)
         {
             backgroundWorker1.RunWorkerAsync();

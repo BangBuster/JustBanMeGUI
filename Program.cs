@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Reflection;
-using System.IO;
 
 namespace JustBanMeGUI
 {
     static class Program
     {
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -21,7 +17,7 @@ namespace JustBanMeGUI
             Form1 form1 = new Form1();
             Authentication authForm = new Authentication();
             Application.Run(authForm);
-            //Application.Run(form1); <- Run this from Authentication
+            Application.Run(form1); //<- Run this from Authentication
         }
     }
 }

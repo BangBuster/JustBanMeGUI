@@ -1,28 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Net;
 using System.IO;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Security.Cryptography;
-using System.Runtime.InteropServices;
 using System.Reflection;
-using Lunar;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace JustBanMeGUI
 {
     public partial class Authentication : Form
     {
-        [DllImport("user32.dll", EntryPoint = "MessageBoxA")]
-        internal static extern int MessageBox(IntPtr hWnd, string lpText, string lpCaption, uint uType);
-
         public Authentication()
         {
             InitializeComponent();
@@ -36,7 +21,7 @@ namespace JustBanMeGUI
                     base.WndProc(ref m);
                     if ((int)m.Result == 0x1)
                         m.Result = (IntPtr)0x2;
-                    return; 
+                    return;
             }
             base.WndProc(ref m);
         }
@@ -45,10 +30,17 @@ namespace JustBanMeGUI
             string aRandomString = "A random sting herobine";
             string hash = Functions.sha1_hash(aRandomString);
             Console.WriteLine(hash);
-            MessageBox((IntPtr) null, "exampleText", "Examplee Caption", 0x00000000);
-            
-            var process = 
-            /*
+            IntPtr lib = nativeFunctions.LoadLibrary("C:\\Users\\BangBuster\\source\\repos\\DLL-Stealth-Injection\\Testing_dll\\x64\\Debug\\Testing_dll.dll");
+
+            int a = Functions.invokeFunction<int>(lib, 1, typeof(Functions.f_print));
+
+        }
+    }
+}
+
+
+
+/*
             // Run checks if user recently authenticated or if login exipred
             const string url_endpoint = "https://run.mocky.io/v3/03e364dc-7752-4b48-b77e-c5eb57d65c30";
             HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create(url_endpoint);
@@ -62,6 +54,3 @@ namespace JustBanMeGUI
             string id = stuff[0]._id;
             Console.WriteLine(id);
              */
-        }
-    }
-}
