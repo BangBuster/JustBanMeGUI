@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Windows.Forms;
 
 namespace JustBanMeGUI
@@ -12,12 +13,11 @@ namespace JustBanMeGUI
         [STAThread]
         static void Main()
         {
+            HttpWebRequest.DefaultWebProxy = new WebProxy();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Form1 form1 = new Form1();
-            Authentication authForm = new Authentication();
-            Application.Run(authForm);
-            Application.Run(form1); //<- Run this from Authentication
+            Application.Run(new Authentication());
+            //Application.Run(form1); //<- Run this from Authentication
         }
     }
 }

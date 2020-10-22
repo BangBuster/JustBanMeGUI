@@ -125,11 +125,11 @@ namespace JustBanMeGUI
             this.CSGO.gameName = "Notepad";
             this.CSGO.shortName = "Notepad";
             this.CSGO.processName = "Notepad";
-            this.CSGO.status = Functions.status_READY;
+            this.CSGO.status = Constants.status_READY;
             this.AmongUs.gameName = "Calculator";
             this.AmongUs.shortName = "Calculator";
             this.AmongUs.processName = "Calculator";
-            this.AmongUs.status = Functions.status_UNAVAILABLE;
+            this.AmongUs.status = Constants.status_UNAVAILABLE;
 
 #else
             this.CSGO.gameName = "CSGO";

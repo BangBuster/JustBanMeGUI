@@ -31,19 +31,18 @@ namespace JustBanMeGUI
 
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             backgroundWorker1.DoWork += backgroundWorker1_DoWork;
-
         }
 
         private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
             while (true)
             {
-                for (int i = 0; i < games.Count; i++) // Itirate through games
+                for (int i = 0; i < Functions.GamesJson.games.Length; i++) // Itirate through games
                 {
 #if DEBUG
                     Console.WriteLine("GOIGN ONCE!");
 #endif
-                    var game = games[i];
+                    var game = Functions.GamesJson.games[i];
                     Label fetchedLabel = panel1.Controls.OfType<Label>().FirstOrDefault(l => l.Name == "cLabel_" + games[i].shortName);
                     RadioButton fetchdRadio = panel1.Controls.OfType<RadioButton>().FirstOrDefault(l => l.Name == "cRadioButton_" + games[i].shortName);
                     if (Functions.processExist(game.processName))
