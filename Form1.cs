@@ -39,17 +39,13 @@ namespace JustBanMeGUI
             {
                 for (int i = 0; i < Functions.GamesJson.games.Length; i++) // Itirate through games
                 {
-#if DEBUG
-                    Console.WriteLine("GOIGN ONCE!");
-#endif
+                    System.Diagnostics.Debug.WriteLine("GOIGN ONCE!");
                     var game = Functions.GamesJson.games[i];
                     Label fetchedLabel = panel1.Controls.OfType<Label>().FirstOrDefault(l => l.Name == "cLabel_" + games[i].shortName);
                     RadioButton fetchdRadio = panel1.Controls.OfType<RadioButton>().FirstOrDefault(l => l.Name == "cRadioButton_" + games[i].shortName);
                     if (Functions.processExist(game.processName))
                     {
-#if DEBUG
-                        Console.WriteLine(game.gameName + " detected!");
-#endif
+                        System.Diagnostics.Debug.WriteLine(game.gameName + " detected!");
                         if (fetchedLabel != null | fetchdRadio != null)
                             continue;
                         RadioButton rBtn = new RadioButton();

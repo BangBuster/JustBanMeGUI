@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net;
 using System.Windows.Forms;
 
@@ -13,6 +14,11 @@ namespace JustBanMeGUI
         [STAThread]
         static void Main()
         {
+            AppDomain.CurrentDomain.FirstChanceException += (sender, eventArgs) =>
+            {   // Handle exceptions TODO: report to the server
+                Debug.WriteLine(eventArgs.Exception.ToString()); 
+                Application.Exit();
+            };
             HttpWebRequest.DefaultWebProxy = new WebProxy();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

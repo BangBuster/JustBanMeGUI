@@ -42,7 +42,6 @@ namespace JustBanMeGUI
                 auth_input.Text = Crypto.XOR_EncryptDecrypt(storedHash.ToString(), Crypto.hardcoded_xor_key);
             }
         }
-        private bool rememberCheck = true;
         private void textUpdater(object sender, EventArgs e)
         {
             if (auth_input.Text.Length == 16)
@@ -71,7 +70,7 @@ namespace JustBanMeGUI
             if (jsonString == "0") // If response is invalid
             {
                 MessageBox.Show("Invalid passcode provided!", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Registry.CurrentUser.DeleteSubKey("Software\\Sym");
+                Registry.CurrentUser.DeleteSubKey("Software\\Sym", false);
                 this.Close();
             }
             if (checkBox1.Checked == true) // If "remember" is checked
@@ -84,39 +83,21 @@ namespace JustBanMeGUI
             }
 
             Functions.GamesJson = JsonConvert.DeserializeObject<Functions.SuccessJson>(jsonString);
-            Form1 mainForm = new Form1();
-            mainForm.Show(this);
             this.Hide();
+            Form1 mainForm = new Form1();
+            mainForm.FormClosed += (sender, eventArgs) =>
+            {
+                Application.Exit();
+            };
+            mainForm.Show(this);
         }
         private async void login_btn_ClickAsync(object sender, EventArgs e)
         {
+            login_btn.Enabled = false;
             string responseString = await Network.Authenticate(auth_input.Text);
-#if DEBUG
-            Console.WriteLine(responseString);
-#endif
-            validateAuthentication(responseString);
-        }
+            System.Diagnostics.Debug.WriteLine(responseString);
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            rememberCheck = !rememberCheck;
+            validateAuthentication(responseString);
         }
     }
 }
-
-
-
-/*
-            // Run checks if user recently authenticated or if login exipred
-            const string url_endpoint = "https://run.mocky.io/v3/03e364dc-7752-4b48-b77e-c5eb57d65c30";
-            HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create(url_endpoint);
-            HttpWebResponse response = (HttpWebResponse)myReq.GetResponse();
-            Stream recieveStream = response.GetResponseStream();
-            StreamReader readStream = new StreamReader(recieveStream, Encoding.UTF8);
-            Console.WriteLine(readStream.ReadToEnd() + "\n\n");
-
-            dynamic stuff = JsonConvert.DeserializeObject(readStream.ReadToEnd());
-
-            string id = stuff[0]._id;
-            Console.WriteLine(id);
-             */
