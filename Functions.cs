@@ -42,6 +42,19 @@ namespace JustBanMeGUI
             IntPtr functionPointer = nativeFunctions.GetProcAddress(libraryAddress, functionOrdinal);
         return (returnType)Marshal.GetDelegateForFunctionPointer(nativeFunctions.GetProcAddress(libraryAddress, functionOrdinal), Delegate).DynamicInvoke();
     }
+        public static void terminateProgram() // Terminates running process
+        {
+            if (System.Windows.Forms.Application.MessageLoop)
+            {
+                // WinForms app
+                System.Windows.Forms.Application.Exit();
+            }
+            else
+            {
+                // Console app
+                System.Environment.Exit(1);
+            }
+        }
         public static returnType invokeFunction<returnType>(IntPtr libraryAddress, string funcitonName, Type Delegate) 
             { // ex: int a = Functions.invokeFunction<int>(lib, 1, typeof(Functions.f_print));
                 IntPtr functionPointer = nativeFunctions.GetProcAddress(libraryAddress, funcitonName);

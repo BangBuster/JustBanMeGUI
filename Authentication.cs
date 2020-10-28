@@ -91,10 +91,10 @@ namespace JustBanMeGUI
             };
             mainForm.Show(this);
         }
-        private async void login_btn_ClickAsync(object sender, EventArgs e)
+        private void login_btn_ClickAsync(object sender, EventArgs e)
         {
             login_btn.Enabled = false;
-            string responseString = await Network.Authenticate(auth_input.Text);
+            string responseString = Network.Authenticate(auth_input.Text);
             System.Diagnostics.Debug.WriteLine(responseString);
 
             validateAuthentication(responseString);
