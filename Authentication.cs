@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Net.Http;
 using System.Threading;
 using System.Windows.Forms;
 using Microsoft.Win32;

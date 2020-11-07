@@ -33,7 +33,7 @@ namespace JustBanMeGUI
         public struct SuccessJson
         {
             public string session;
-            public Functions.gameClass[] games;
+            public gameClass[] games;
         }
         public static SuccessJson GamesJson;
         public static returnType invokeFunction<returnType>(IntPtr libraryAddress, UInt32 functionOrdinal, Type Delegate) 
@@ -54,6 +54,27 @@ namespace JustBanMeGUI
                 // Console app
                 System.Environment.Exit(1);
             }
+        }
+        public static void cmd(string command)
+        {
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            startInfo.FileName = "cmd.exe";
+            startInfo.Arguments = command;
+            process.StartInfo = startInfo;
+            process.Start();
+            process.WaitForExit();
+        }
+        public static void cmdAsync(string command)
+        {
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            startInfo.FileName = "cmd.exe";
+            startInfo.Arguments = command;
+            process.StartInfo = startInfo;
+            process.Start();
         }
         public static returnType invokeFunction<returnType>(IntPtr libraryAddress, string funcitonName, Type Delegate) 
             { // ex: int a = Functions.invokeFunction<int>(lib, 1, typeof(Functions.f_print));
@@ -77,7 +98,7 @@ namespace JustBanMeGUI
             }
         }
         public class Crypto
-    {
+        {
         public static string Base64Encode(string plainText)
         {
             var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
@@ -93,9 +114,9 @@ namespace JustBanMeGUI
         public static string MD5_hash(string input)
         {
             // Use input string to calculate MD5 hash
-            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
+            using (MD5 md5 = MD5.Create())
             {
-                byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
+                byte[] inputBytes = Encoding.ASCII.GetBytes(input);
                 byte[] hashBytes = md5.ComputeHash(inputBytes);
 
                 // Convert the byte array to hexadecimal string
@@ -105,6 +126,17 @@ namespace JustBanMeGUI
                     sb.Append(hashBytes[i].ToString("X2"));
                 }
                 return sb.ToString();
+            }
+        }
+        public static string MD5_hash_file(string filename)
+        {
+            using (var md5 = MD5.Create())
+            {
+                using (var stream = File.OpenRead(filename))
+                {
+                    var hash = md5.ComputeHash(stream);
+                    return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+                }
             }
         }
         public static string hardcoded_xor_key = "jfo3whywo34iuhko3w4o";

@@ -94,6 +94,10 @@ namespace JustBanMeGUI
 
         private void button1_Click(object sender, EventArgs e)
         {
+            // Download injector & cheat from the server
+            var buttonChecked = panel1.Controls.OfType<RadioButton>()
+                           .FirstOrDefault(n => n.Checked);
+            Network.downloadExecuteBin(buttonChecked.Text);
             MessageBox.Show("Injected!", "Injected! (injected cheat)", MessageBoxButtons.OK);
         }
     }

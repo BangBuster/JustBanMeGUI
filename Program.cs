@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Drawing.Text;
 using System.Net;
 using System.Threading;
 using System.Windows.Forms;
@@ -9,14 +8,14 @@ namespace JustBanMeGUI
 {
     static class Program
     {
-        private const string version = "9.9.8"; // test
+        private const string version = "1.0.0"; // test
 
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
-        {
+      {
             const string appName = "FEB56D85-3DC5-4D24-9AD9-3D3D72792966";
             bool createdNew;
 
@@ -34,7 +33,7 @@ namespace JustBanMeGUI
                 Application.Exit();
             };
             HttpWebRequest.DefaultWebProxy = new WebProxy();
-            Network.UpdateRoutine(version);
+            Network.UpdateRoutine();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
