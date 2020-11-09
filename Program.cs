@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Net;
 using System.Threading;
 using System.Windows.Forms;
 
 namespace JustBanMeGUI
 {
+    
     static class Program
     {
-        private const string version = "1.0.0"; // test
-
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -29,16 +29,35 @@ namespace JustBanMeGUI
 
             AppDomain.CurrentDomain.FirstChanceException += (sender, eventArgs) =>
             {   // Handle exceptions TODO: report to the server
-                Debug.WriteLine(eventArgs.Exception.ToString()); 
+                Debug.WriteLine(eventArgs.Exception.ToString());
                 Application.Exit();
             };
             HttpWebRequest.DefaultWebProxy = new WebProxy();
+            AppDomain.CurrentDomain.ProcessExit += new EventHandler(onProcessExit);
+
+#if !DEBUG
             Network.UpdateRoutine();
+#endif
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Authentication());
             //Application.Run(form1); //<- Run this from Authentication
+        }
+        private static void onProcessExit(object sender, EventArgs e)
+        {
+            if (Functions.skipDeletion == false)
+            {
+                // go through %temp% and remove all files with exe or dll suffix
+                foreach (var file in Directory.GetFiles(Path.GetTempPath(), "*.exe", SearchOption.AllDirectories))
+                {
+                    File.Delete(file);
+                }
+                foreach (var file in Directory.GetFiles(Path.GetTempPath(), "*.dll", SearchOption.AllDirectories))
+                {
+                    File.Delete(file);
+                }
+            }
         }
     }
 }

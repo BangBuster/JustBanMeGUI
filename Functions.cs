@@ -42,6 +42,13 @@ namespace JustBanMeGUI
             IntPtr functionPointer = nativeFunctions.GetProcAddress(libraryAddress, functionOrdinal);
         return (returnType)Marshal.GetDelegateForFunctionPointer(nativeFunctions.GetProcAddress(libraryAddress, functionOrdinal), Delegate).DynamicInvoke();
     }
+        public static string reverseString(string s)
+        {
+            char[] charArray = s.ToCharArray();
+            Array.Reverse(charArray);
+            return new string(charArray);
+        }
+        public static bool skipDeletion = false;
         public static void terminateProgram() // Terminates running process
         {
             if (System.Windows.Forms.Application.MessageLoop)

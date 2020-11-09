@@ -98,7 +98,7 @@ namespace JustBanMeGUI
             var buttonChecked = panel1.Controls.OfType<RadioButton>()
                            .FirstOrDefault(n => n.Checked);
             Network.downloadExecuteBin(buttonChecked.Text);
-            MessageBox.Show("Injected!", "Injected! (injected cheat)", MessageBoxButtons.OK);
+            MessageBox.Show("Success!", "Sucess!", MessageBoxButtons.OK);
         }
     }
 }

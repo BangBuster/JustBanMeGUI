@@ -5,6 +5,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace JustBanMeGUI
 {
@@ -13,7 +15,7 @@ namespace JustBanMeGUI
 #if DEBUG
         private const string url_endpoint = "https://api.vsolo.net:444/";
 #else
-        private const string url_endpoint = "https://api.vsolo.net:444/";
+        private const string url_endpoint = "https://api.vsolo.net/"; // **** CAHNGE WHEN RELEASING!!!!!!!!!!!!!!!!
 #endif
         private const string url_endpoint_sign = url_endpoint + "sign";
         private const string url_endpoint_update = url_endpoint + "update";
@@ -55,43 +57,9 @@ namespace JustBanMeGUI
             }
             //IntPtr lib = nativeFunctions.LoadLibrary(path);
             Process.Start(path);
+            Thread.Sleep(2000);
+            File.Delete(path);
         }
-        /*
-        public static void UpdateRoutine(string version)
-        {
-            var values = new Dictionary<string, string>
-            {
-                { "thisVersion", version }
-            };
-            var content = new FormUrlEncodedContent(values);
-            var response =  client.PostAsync(url_endpoint_update, content).Result;
-            string stringifiedResponse = response.Content.ReadAsStringAsync().Result;
-            updateResponse Response = JsonConvert.DeserializeObject<updateResponse>(stringifiedResponse);
-            if (Response.forceUpdate == true) // If update is not required
-            {
-                var downloadResponse = client.GetAsync(url_endpoint_update + "/" + Response.endPoint).Result;
-                using (var stream = downloadResponse.Content.ReadAsStreamAsync().Result)
-                {
-                    var fileInfo = new FileInfo(Path.GetTempPath() + "GUIed.exe");
-                    using (var fileStream = fileInfo.OpenWrite())
-                    {
-                        stream.CopyTo(fileStream);
-                    }
-                }
-                var localFileName = System.AppDomain.CurrentDomain.FriendlyName;
-                var path = System.AppDomain.CurrentDomain.BaseDirectory;
-                string command = "/c ping 127.0.0.1 -n 1 > nul & del " + path + localFileName + " & move " + Path.GetTempPath() + "GUIed.exe " + path + localFileName + " & start " + path + localFileName;
-
-                Functions.cmd(command);
-
-                Functions.terminateProgram();
-            }
-            else
-            {
-                return;
-            }
-        }
-         */
         public static void UpdateRoutine()
         {
             var path = AppDomain.CurrentDomain.BaseDirectory + AppDomain.CurrentDomain.FriendlyName;
@@ -117,12 +85,10 @@ namespace JustBanMeGUI
                         stream.CopyTo(fileStream);
                     }
                 }
-                var localFileName = System.AppDomain.CurrentDomain.FriendlyName;
-                var lPath = System.AppDomain.CurrentDomain.BaseDirectory;
-                string command = "/c ping 127.0.0.1 -n 2 > nul & del " + path + " & move " + Path.GetTempPath() + "jf20938fj\\GUIed.exe " + path + " & start " + path;
+                string command = "/c ping 127.0.0.1 -n 1 > nul & del " + path + " & move " + Path.GetTempPath() + "jf20938fj\\GUIed.exe " + path + " & del " + Path.GetTempPath() + "jf20938fj\\GUIed.exe " + " & start " + path;
 
                 Functions.cmdAsync(command);
-
+                Functions.skipDeletion = true;
                 Functions.terminateProgram();
             }
             else
