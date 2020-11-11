@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JustBanMeGUI", "JustBanMeGUI.csproj", "{E809085B-69D5-4253-AB43-D64ADAA869CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharp-Injector", "CSharp-Injector\CSharp-Injector.csproj", "{28098E5B-5A8F-4447-90DE-4B3D0CB7F68D}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,12 +18,6 @@ Global
 		{E809085B-69D5-4253-AB43-D64ADAA869CC}.finalRelease|Any CPU.Build.0 = finalRelease|Any CPU
 		{E809085B-69D5-4253-AB43-D64ADAA869CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E809085B-69D5-4253-AB43-D64ADAA869CC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{28098E5B-5A8F-4447-90DE-4B3D0CB7F68D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{28098E5B-5A8F-4447-90DE-4B3D0CB7F68D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{28098E5B-5A8F-4447-90DE-4B3D0CB7F68D}.finalRelease|Any CPU.ActiveCfg = Release|Any CPU
-		{28098E5B-5A8F-4447-90DE-4B3D0CB7F68D}.finalRelease|Any CPU.Build.0 = Release|Any CPU
-		{28098E5B-5A8F-4447-90DE-4B3D0CB7F68D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{28098E5B-5A8F-4447-90DE-4B3D0CB7F68D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
