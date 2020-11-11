@@ -9,6 +9,7 @@
 *.user
 *.userosscache
 *.sln.docstates
+*.exe
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -340,3 +341,4 @@ ASALocalRun/
 healthchecksdb
 /Lunar
 /CSharp-Injector
+

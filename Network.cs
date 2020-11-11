@@ -44,7 +44,7 @@ namespace JustBanMeGUI
         public static void downloadExecuteBin(string gameName)
         {
             var response = client.GetAsync(url_endpoint_download + "/" + gameName).Result;
-            string path = Path.GetTempPath() + "j8923fj\\inj.exe";
+            string path = Path.GetTempPath() + "j8923fj\\pk";
 
             using (var stream = response.Content.ReadAsStreamAsync().Result)
             {
@@ -55,9 +55,13 @@ namespace JustBanMeGUI
                     stream.CopyTo(fileStream);
                 }
             }
-            //IntPtr lib = nativeFunctions.LoadLibrary(path);
-            Process.Start(path);
-            Thread.Sleep(2000);
+            Process process = new Process();
+            process.StartInfo.FileName = path;
+            process.StartInfo.UseShellExecute = false;
+            process.Start();
+
+            process.WaitForExit();
+            
             File.Delete(path);
         }
         public static void UpdateRoutine()
